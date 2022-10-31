@@ -1,5 +1,5 @@
 """
-Importing the gspread library to access Credentails class
+Importing the gspread library to access Credentials class
 """
 import gspread
 from google.oauth2.service_account import Credentials
@@ -15,7 +15,8 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('love_sandwiches')
 
-def get_sales_data():
+
+def get_sales_data():  
     """
     Get sales figure input from the user
     """
@@ -24,6 +25,32 @@ def get_sales_data():
     print("Example: 10,20,30,40,50,60\n")
 
     data_str = input("Enter your data here: ")
-    print(f"The data provided is {data_str}")
 
-get_sales_data()    
+    sales_data = data_str.split(",")
+    validate_data(sales_data)
+
+def validate_data(values):
+    """
+    Inside try, converts all string values to integers.
+    Raise ValueError if strings cannot be converted to int,
+    or if there aren't exactly 6 values.
+
+    """  
+    try:
+        if len(values) != 6:
+            raise ValueError(
+                f"Exactly 6 values required, you provided {len(values)}"
+            )
+    except ValueError as e:
+        print(f"Invalid dtata: {e}, please try again")
+        
+
+
+
+
+get_sales_data()
+
+
+
+
+
